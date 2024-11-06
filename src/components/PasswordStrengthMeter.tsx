@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./styles.css";
 import { getTheme } from "../themes";
-import type { PasswordStrengthMeterProps, StrengthLevel } from "../types";
 import { calculateStrength, getStrengthLevel } from "../utils";
+import { PasswordStrengthMeterProps, StrengthLevel } from "../types";
 
 export const PasswordStrengthMeter: React.FC<PasswordStrengthMeterProps> = ({
   password,
@@ -28,6 +28,10 @@ export const PasswordStrengthMeter: React.FC<PasswordStrengthMeterProps> = ({
     <div className={`password-strength-meter ${className}`}>
       <div className="password-strength-meter__progress">
         <div
+          role="progressbar"
+          aria-valuenow={strength}
+          aria-valuemin={0}
+          aria-valuemax={100}
           className="password-strength-meter__bar"
           style={{
             width: `${strength}%`,

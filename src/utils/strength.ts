@@ -3,41 +3,62 @@ import type { StrengthLevel } from "../types";
 export const calculateStrength = (password: string): number => {
   if (!password) return 0;
 
+  const commonPasswords = [
+    "password",
+    "password1",
+    "password123",
+    "passw0rd",
+    "passw0rd1",
+    "passw0rd123",
+    "p@ssword",
+    "p@ssword1",
+    "p@ssword123",
+    "p@ssw0rd",
+    "p@ssw0rd1",
+    "p@ssw0rd123",
+    "123456",
+    "qwerty",
+    "admin",
+    "letmein",
+    "welcome",
+  ];
+
   let score = 0;
+
+  // Basic checks
   const checks = {
-    length: { min: 8, bonus: 12 },
-    uppercase: /[A-Z]/,
-    lowercase: /[a-z]/,
-    numbers: /[0-9]/,
-    symbols: /[^A-Za-z0-9]/,
-    repeating: /(.)\1{2,}/,
-    consecutive:
-      /(abc|bcd|cde|def|efg|fgh|ghi|hij|ijk|jkl|klm|lmn|mno|nop|opq|pqr|qrs|rst|stu|tuv|uvw|vwx|wxy|xyz)/i,
-    common: /(password|123456|qwerty|admin|letmein|welcome)/i,
+    hasMinLength: password.length >= 8,
+    hasUpperCase: /[A-Z]/.test(password),
+    hasLowerCase: /[a-z]/.test(password),
+    hasNumbers: /[0-9]/.test(password),
+    hasSymbols: /[^A-Za-z0-9]/.test(password),
+    hasCommonPassword: commonPasswords.includes(password.toLowerCase()),
   };
 
-  // Length checks
-  if (password.length >= checks.length.min) score += 1;
-  if (password.length >= checks.length.bonus) score += 1;
+  // Basic scoring - total possible: 40
+  if (checks.hasMinLength) score += 10;
+  if (checks.hasUpperCase) score += 10;
+  if (checks.hasLowerCase) score += 10;
+  if (checks.hasNumbers) score += 10;
 
-  // Character variety checks
-  if (checks.uppercase.test(password)) score += 1;
-  if (checks.lowercase.test(password)) score += 1;
-  if (checks.numbers.test(password)) score += 1;
-  if (checks.symbols.test(password)) score += 1;
+  // Additional features - total possible: 20
+  if (checks.hasSymbols) score += 10;
+  if (password.length >= 12) score += 10;
 
-  // Deductions
-  if (checks.repeating.test(password)) score -= 1;
-  if (checks.consecutive.test(password)) score -= 1;
-  if (checks.common.test(password)) score -= 2;
+  // Penalties for common passwords
+  if (checks.hasCommonPassword) {
+    score = Math.floor(score * 0.5); // 50% penalty
+  }
 
-  // Normalize score to 0-100
-  return Math.max(Math.min((score / 6) * 100, 100), 0);
+  // Normalize score between 0 and 100
+  const maxScore = 60; // Total possible score
+  const normalizedScore = Math.floor((score / maxScore) * 100);
+  return Math.min(100, normalizedScore);
 };
 
 export const getStrengthLevel = (score: number): StrengthLevel => {
-  if (score < 25) return "weak";
+  if (score < 30) return "weak";
   if (score < 50) return "fair";
-  if (score < 75) return "good";
+  if (score < 70) return "good";
   return "strong";
 };
