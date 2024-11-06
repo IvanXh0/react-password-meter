@@ -1,5 +1,5 @@
 {
-  "name": "react-password-meter",
+  "name": "@xho/react-password-meter",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
