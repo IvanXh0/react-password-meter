@@ -12,10 +12,10 @@
     "url": "git+https://github.com/IvanXh0/react-password-meter.git"
   },
   "publishConfig": {
-    "access": "public"  // needed if using @username scope
+    "access": "public"
   },
   "scripts": {
-    "build": "rollup -c",
+    "build": "tsup",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
@@ -52,7 +52,7 @@
   "author": "Ivan Apostolovski",
   "license": "ISC",
   "description": "A customizable password strength meter for React",
-   "tags": [
+  "tags": [
     "react",
     "password",
     "security",
