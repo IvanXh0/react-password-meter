@@ -1,7 +1,19 @@
 {
   "name": "@xho/react-password-meter",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IvanXh0/react-password-meter.git"
+  },
+  "publishConfig": {
+    "access": "public"  // needed if using @username scope
+  },
   "scripts": {
     "build": "rollup -c",
     "test": "jest",
@@ -15,10 +27,37 @@
     "version": "npm run format && git add -A src",
     "postversion": "git push && git push --tags"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "react",
+    "password",
+    "strength",
+    "meter",
+    "security",
+    "validation",
+    "form",
+    "input",
+    "typescript",
+    "component",
+    "ui",
+    "password-strength",
+    "password-validator",
+    "react-component",
+    "password-meter",
+    "password-check",
+    "password-security",
+    "react-password",
+    "form-validation",
+    "password-validation"
+  ],
+  "author": "Ivan Apostolovski",
   "license": "ISC",
-  "description": "",
+  "description": "A customizable password strength meter for React",
+   "tags": [
+    "react",
+    "password",
+    "security",
+    "typescript"
+  ],
   "devDependencies": {
     "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-node-resolve": "^15.3.0",
